@@ -1,5 +1,5 @@
 import React from 'react'
-import Nav from '../Nav/Nav'
+// import Nav from '../Nav/Nav'
 import axios from 'axios'
 import '../../styles/auth.css'
 import {Redirect} from 'react-router-dom'
@@ -20,6 +20,8 @@ class Auth extends React.Component{
   registerSubmit = async()=>{
     await axios.post("/api/auth/register",this.state).then(res=>{
       // console.log(res.data)
+      const {username,id,profilepic} = res.data[0]
+      this.props.updateUserInfo(id,username,profilepic)
       this.setState({authenticated:true})
     }
     )
@@ -27,8 +29,9 @@ class Auth extends React.Component{
 
   loginSubmit = async()=>{
     await axios.post("/api/auth/login",this.state).then(res=>{
-      const {username,password,profile_pic} = res.data
-      this.props.updateUserInfo(username,password,profile_pic)
+      console.log(res.data)
+      const {username,id,profilepic} = res.data[0]
+      this.props.updateUserInfo(id, username,profilepic)
       this.setState({authenticated:true})
     })
   }
@@ -43,7 +46,7 @@ class Auth extends React.Component{
     } else{
       return(
         <div className = "view">
-          <Nav/>
+  
           <div className = "loginRegister">
   
             <h1>Helo</h1>

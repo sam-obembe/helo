@@ -1,0 +1,8 @@
+.dashboardHome{
+  display: flex;
+  flex-direction: row;
+}
+
+.dash{
+  width: 90vw;
+}

@@ -4,7 +4,8 @@ import {connect} from 'react-redux'
 
 const Nav=(props)=>{
   return(
-    <div>
+    <div className = "nav">
+      <img src = {`${props.profilepicture}`} alt = "profilepic"></img>
       <p>{props.username}</p>
     </div>
   )  
@@ -13,7 +14,7 @@ const Nav=(props)=>{
 function mapStateToProps(state){
   return{
     username: state.username,
-    profilepicture: state.profilepicture
+    profilepic: state.profilepic
   }
 }
 

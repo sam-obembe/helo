@@ -13,7 +13,19 @@ module.exports = {
       res.status(200).send(user)
     }else {
       res.status(401).send("unauthorized")
-    }
-    
+    }  
+  },
+  getPosts: async(req,res)=>{
+    const db = req.app.get('db')
+    const {userId} = req.params
+    const {userPosts,search} = req.query
+    const posts = await db.post_and_author(+userId)
+    // if(userPosts&&search){
+
+    // }else if (!userPosts && !search){
+    //   await db.get_all_posts(userId)
+    // }else if (!userPosts && search){
+      
+    // }
   }
 }
