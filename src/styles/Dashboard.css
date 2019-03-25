@@ -1,8 +1,16 @@
 .dashboardHome{
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 }
 
 .dash{
   width: 90vw;
+}
+
+.postCards{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-left: 20%;
 }

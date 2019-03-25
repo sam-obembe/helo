@@ -3,6 +3,7 @@ import Nav from '../Nav/Nav'
 import SearchBar from './SearchBar'
 import {connect} from 'react-redux'
 import '../../styles/Dashboard.css'
+import PostCard from './PostCard'
 import axios from 'axios';
 
 class Dashboard extends React.Component{
@@ -11,8 +12,11 @@ class Dashboard extends React.Component{
     this.state = {
       searchString: "",
       userPosts: false,
+      posts : []
     }
   }
+
+  componentDidMount(){ this.getPosts() }
 
   userPostsToggle = (e)=>{
     let newVal = (e.target.value === "true")
@@ -20,21 +24,38 @@ class Dashboard extends React.Component{
   }
 
   getPosts = ()=>{
-    axios.get(`/api/posts/${this.props.id}?userPosts=${this.state.userPosts}&search=${this.state.searchString}`)
+    axios.get(`/api/posts/?userPosts=${this.state.userPosts}&search=${this.state.searchString}`).then(res=> {
+      this.setState({posts:res.data})
+    })
   }
 
   searchHandle = (e)=>{
     this.setState({searchString: e.target.value})
   }
 
-
   render(){
+    const postCards = ()=>{
+      if(this.state.posts.length ===0){
+        return <h1>Loading</h1>
+      }else{
+        return this.state.posts.map((post)=>{
+          return <PostCard title = {post.title} key = {post.id} id = {post.id}/>
+        })
+      }
+    }
+    
     return(
       <div className = "dashboardHome">
-        <Nav/>
+        <div>
+          <Nav/>
+        </div>
+       
         <div className = "dash">
           <h1>Dashboard</h1>
           <SearchBar postsToggle = {this.userPostsToggle} getPosts = {this.getPosts} searchInput = {this.searchHandle}/>
+          <div className = "postCards">
+            {postCards()}
+          </div>
         </div>
       </div>
     )
